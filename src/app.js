@@ -24,11 +24,12 @@ h4.innerHTML = `${hours}:${minutes}, ${day} ${date} ${month} ${year}`
 function showTemperature(response) {
   let temperature = document.querySelector (".temperature")
   temperature.innerHTML = Math.round(response.data.main.temp);
+  let icon = document.querySelector ("#icons");
+  icon.setAttribute("src", `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
   let wind = document.querySelector ("#wind");
   wind.innerHTML = response.data.wind.speed;
   let humidity = document.querySelector ("#humidity");
   humidity.innerHTML = response.data.main.humidity;
-  console.log(response.data)
  let description = document.querySelector ("#describe");
  description.innerHTML = response.data.weather[0].description;
 

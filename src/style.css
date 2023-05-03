@@ -1,3 +1,4 @@
+
 .city-search {
     position: relative;
     text-align: center;
@@ -8,8 +9,9 @@
 }
 
 .search-box {
-    width: 300px;
+    width: 350px;
 }
+
 
 
 .main {
@@ -62,7 +64,7 @@
 }
 
 .forecast {
-    height: 120px;
+    height: 200px;
     font-family: 'Inter', sans-serif;
     text-align: center;
     display: inline-block;
@@ -71,6 +73,7 @@
 
 .icon {
     font-size: 25px;
+    
 }
 
 .forecast-text {
