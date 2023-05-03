@@ -67,4 +67,3 @@ function showPosition(position) {
   axios.get(apiUrl).then(showCTemperature);
 }
 navigator.geolocation.getCurrentPosition(showPosition);
-
