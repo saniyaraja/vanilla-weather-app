@@ -1,12 +1,14 @@
 
 .city-search {
-    position: relative;
-    text-align: center;
-    top: 60px;
-    align-items: center;
-    font-family: 'Inter',
-        sans-serif;
-}
+            position: relative;
+            text-align: center;
+            top: 60px;
+            align-items: center;
+            font-family: "Inter", sans-serif;
+            width: 30rem;
+            margin: 0 auto;
+        }
+
 
 .search-box {
     width: 350px;
