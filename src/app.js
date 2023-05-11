@@ -67,3 +67,25 @@ function showPosition(position) {
   axios.get(apiUrl).then(showCTemperature);
 }
 navigator.geolocation.getCurrentPosition(showPosition);
+
+
+function displayForecast() {
+  let forecastElement = document.querySelector ("#forecast");
+}
+  let forecastHTML = `<div class="row">`;
+  let days = ["Thu", "Fri", "Sat"]
+  days.forEach(function (day))
+
+  forecastHTML = forecastHTML +
+`<div class="col-2">
+<div class="card forecast" style="width: 5rem">
+  <div class="card-body">
+<h2 class="card-subtitle mb-3 forecast-text">${day}</h2>
+  <img src="https://openweathermap.org/img/wn/10d@2x.png" class="rounded align" id="icons">
+ <h2 class="card-subtitle mt-3 mb-4 text forecast-text">20°</h2>
+ </div>
+</div>`;
+forecastHTML = forecastHTML + `</div>`;
+forecastElement.innerHTML = forecastHTML;
+
+displayForecast();
