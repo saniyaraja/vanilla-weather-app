@@ -1,13 +1,12 @@
-
 .city-search {
-            position: relative;
-            text-align: center;
-            top: 60px;
-            align-items: center;
-            font-family: "Inter", sans-serif;
-            width: 30rem;
-            margin: 0 auto;
-        }
+    position: relative;
+    text-align: center;
+    top: 60px;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    width: 30rem;
+    margin: 0 auto;
+}
 
 
 .search-box {
@@ -69,13 +68,13 @@
     height: 200px;
     font-family: 'Inter', sans-serif;
     text-align: center;
-    display: inline-block;
+    display: flex;
     margin-right: 5px;
 }
 
 .align {
     text-align: center;
-    
+
 }
 
 .forecast-text {
