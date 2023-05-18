@@ -4,7 +4,7 @@
     top: 60px;
     align-items: center;
     font-family: "Inter", sans-serif;
-    width: 30rem;
+    width: 40rem;
     margin: 0 auto;
 }
 
@@ -16,9 +16,7 @@
 
 
 .main {
-    height: 600px;
-    display: block;
-    margin: 0 auto;
+    justify-content: center;
     top: 100px;
 }
 

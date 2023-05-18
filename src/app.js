@@ -1,52 +1,78 @@
-let now = new Date ();
-let h4 = document.querySelector (".date");
+let now = new Date();
+let h4 = document.querySelector(".date");
 
 let hours = now.getHours();
-if(hours < 10) {
+if (hours < 10) {
   hours = `0${hours}`;
 }
 let minutes = now.getMinutes();
-if(minutes < 10) {
+if (minutes < 10) {
   minutes = `0${minutes}`;
 }
 let date = now.getDate();
 let year = now.getFullYear();
-let days = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"]
+let days = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"];
 let day = days[now.getDay()];
-let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+let months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 let month = months[now.getMonth()];
 
-
-h4.innerHTML = `${hours}:${minutes}, ${day} ${date} ${month} ${year}`
+h4.innerHTML = `${hours}:${minutes}, ${day} ${date} ${month} ${year}`;
 
 function getForecast(coordinates) {
   let apiKey = "50c2acd53349fabd54f52b93c8650d37";
   let apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
   axios.get(apiURL).then(displayForecast);
 }
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+  return days[day];
+}
 
 function displayForecast(response) {
+  console.log(response.data);
   let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
- let days = ["Thu", "Fri", "Sat", "Sun"];
   let forecastHTML = `<div class="row">`;
+
+  forecast.forEach(function (day, index) {
+    if (index < 6){
+    console.log(day);
   
-  days.forEach(function (day) {
-    forecastHTML = forecastHTML + `
-    <div class="col-3">
+    forecastHTML =
+      forecastHTML +
+      `
+    <div class="col">
     <div class="card forecast">
       <div class="card-body">
-    <h2 class="card-subtitle mb-3 forecast-text">${day}</h2>
-      <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png" class="rounded align" id="icons">
-    <h2 class="card-subtitle mt-3 mb-4 text forecast-text">${day.temp}</h2>
+    <h2 class="card-subtitle mb-3 forecast-text">${formatDay(day.dt)}</h2>
+
+    <img src="https://openweathermap.org/img/wn/${
+        day.weather[0].icon
+      }@2x.png" class="rounded align" id="icons">
+    <h2 class="card-subtitle mt-3 mb-4 text forecast-text">${Math.round(day.temp.day)}°</h2>
     </div>
     </div>
     `;
     forecastHTML = forecastHTML + `</div>`;
     forecastElement.innerHTML = forecastHTML;
-    console.log(forecast.HTML);
-  })
+    console.log(forecast.HTML);}
+  });
 }
 
 function showTemperature(response) {
@@ -63,33 +89,30 @@ function showTemperature(response) {
   humidity.innerHTML = response.data.main.humidity;
   let description = document.querySelector("#describe");
   description.innerHTML = response.data.weather[0].description;
-  console.log(response.data);
   getForecast(response.data.coord);
 }
-
 
 function search(event) {
   event.preventDefault();
   let searchInput = document.querySelector("#search-text-input");
   let city = searchInput.value;
-  let h2 = document.querySelector (".city");
+  let h2 = document.querySelector(".city");
   h2.innerHTML = `${city}`;
-  
-let apiKey = "50c2acd53349fabd54f52b93c8650d37";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-axios.get(apiUrl).then(showTemperature);
+  let apiKey = "50c2acd53349fabd54f52b93c8650d37";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+  axios.get(apiUrl).then(showTemperature);
 }
 
-let form = document.querySelector (".city-search");
+let form = document.querySelector(".city-search");
 form.addEventListener("submit", search);
 
-function showCTemperature (response){
-  let temperature =Math.round (response.data.main.temp);
+function showCTemperature(response) {
+  let temperature = Math.round(response.data.main.temp);
   let h2 = document.querySelector("h2");
   h2.innerHTML = `It is currently ${temperature}° in ${response.data.name}`;
 }
-
 
 function showPosition(position) {
   let apiKey = "50c2acd53349fabd54f52b93c8650d37";
@@ -99,7 +122,6 @@ function showPosition(position) {
 
   axios.get(apiUrl).then(showCTemperature);
 }
-navigator.geolocation.getCurrentPosition(showPosition);
+// navigator.geolocation.getCurrentPosition(showPosition);
 
-displayForecast();
 
