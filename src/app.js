@@ -19,21 +19,53 @@ let month = months[now.getMonth()];
 
 h4.innerHTML = `${hours}:${minutes}, ${day} ${date} ${month} ${year}`
 
-
-function showTemperature(response) {
-  let temperature = document.querySelector (".temperature")
-  temperature.innerHTML = Math.round(response.data.main.temp);
-  let icon = document.querySelector ("#icons");
-  icon.setAttribute("src", `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
-  let wind = document.querySelector ("#wind");
-  wind.innerHTML = response.data.wind.speed;
-  let humidity = document.querySelector ("#humidity");
-  humidity.innerHTML = response.data.main.humidity;
- let description = document.querySelector ("#describe");
- description.innerHTML = response.data.weather[0].description;
-
+function getForecast(coordinates) {
+  let apiKey = "50c2acd53349fabd54f52b93c8650d37";
+  let apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiURL).then(displayForecast);
 }
 
+
+function displayForecast() {
+  
+  let forecastElement = document.querySelector("#forecast");
+ let days = ["Thu", "Fri", "Sat", "Sun"];
+  let forecastHTML = `<div class="row">`;
+  
+  days.forEach(function (day) {
+    forecastHTML = forecastHTML + `
+    <div class="col-3">
+    <div class="card forecast">
+      <div class="card-body">
+    <h2 class="card-subtitle mb-3 forecast-text">${day}</h2>
+      <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png" class="rounded align" id="icons">
+    <h2 class="card-subtitle mt-3 mb-4 text forecast-text">${day.temp}</h2>
+    </div>
+    </div>
+    `;
+    forecastHTML = forecastHTML + `</div>`;
+    forecastElement.innerHTML = forecastHTML;
+    console.log(forecast.HTML);
+  })
+}
+
+function showTemperature(response) {
+  let temperature = document.querySelector(".temperature");
+  temperature.innerHTML = Math.round(response.data.main.temp);
+  let icon = document.querySelector("#icons");
+  icon.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+  let wind = document.querySelector("#wind");
+  wind.innerHTML = response.data.wind.speed;
+  let humidity = document.querySelector("#humidity");
+  humidity.innerHTML = response.data.main.humidity;
+  let description = document.querySelector("#describe");
+  description.innerHTML = response.data.weather[0].description;
+  console.log(response.data);
+  getForecast(response.data.coord);
+}
 
 
 function search(event) {
@@ -69,35 +101,5 @@ function showPosition(position) {
 }
 navigator.geolocation.getCurrentPosition(showPosition);
 
-
-
-function displayForecast() {
-  let forecast = response.data.daily;
-
-  let forecastElement = document.querySelector ("#forecast");
-
-  let forecastHTML = `<div class="row">`;
-  let days = ["Thu", "Fri", "Sat", "Sun"]
-  days.forEach(function (forecastDay){
-    forecastHTML = forecastHTML + `
-    <div class="col-3">
-    <div class="card forecast">
-      <div class="card-body">
-    <h2 class="card-subtitle mb-3 forecast-text">${forecastDay.dt}</h2>
-      <img src="https://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png" class="rounded align" id="icons">
-    <h2 class="card-subtitle mt-3 mb-4 text forecast-text">${forecastDay.temp}</h2>
-    </div>
-    </div>
-    `;
-    forecastHTML = forecastHTML + `</div>`;
-    forecastElement.innerHTML = forecastHTML;
-  })
-
-}
-function getForecast(coordinates) {
-let apiKey = "50c2acd53349fabd54f52b93c8650d37";
-let apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apikey}&units=metric`;
-axios.get(apiURL).then(displayForecast)
-}
-
+displayForecast();
 
